@@ -7,5 +7,5 @@ A structured repository documenting my journey through Data Structures and Algor
 - Practice low-level memory management and pointer manipulation in C++.
 - Maintain a highly organized, easily accessible archive of solutions for future reference.
 
-Author
+Author :
 Ujwal Dwivedi
