@@ -1,11 +1,8 @@
-# Exclude specific practice/scratchpad files
 Practice.cpp
 
-# Exclude compiled binaries and object files
 hello
 *.out
 *.o
 *.exe
 
-# Exclude editor/IDE specific folders (optional but recommended)
 .vscode/
