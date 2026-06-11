@@ -511,6 +511,8 @@ int main(){
     return 0;
 }
 
+//Largest element
+
 #include <iostream>
 
 int main(){
@@ -552,6 +554,8 @@ int main(){
     return 0;
 
 }
+
+//Find Second Smallest and Second Largest Element in an array
 
 #include <iostream>
 
@@ -595,6 +599,8 @@ int main(){
 
 }
 
+//Find Second Smallest and Second Largest Element in an array
+
 #include <iostream>
 
 int main(){
@@ -617,6 +623,8 @@ int main(){
         std::cout<<"yes";
     }
 }
+
+//Check if an Array is Sorted
 
 #include <iostream>
 
@@ -643,6 +651,8 @@ int main(){
     std::cout<<"number of elements"<<k;
 }
 
+//Remove Duplicates in-place from Sorted Array
+
 #include <iostream>
 
 int main(){
@@ -659,6 +669,8 @@ int main(){
     }
     return 0;
 }
+
+//Left Rotate the Array by One
 
 #include <iostream>
 #include <string>
@@ -703,3 +715,128 @@ int main(){
 
     return 0;
 }
+
+//Rotate array by K elements
+
+#include <iostream>
+
+void swap(int *x, int *y){
+    int temp = *x; 
+    *x = *y;
+    *y = temp;
+}
+
+int main(){
+    int arr[]= {1,0,2,3,0,4,0,1};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    int j=-1;
+    
+
+    for(int i=0;i<n;i++){
+        if(arr[i] == 0){
+            j=i;
+            break;
+        }
+        
+    }
+    if(j == -1){
+        std::cout<<"No zeros found";
+    }
+
+    for(int i=j+1; i<n; i++){
+        if(arr[i] != 0){
+            swap(&arr[j], &arr[i]);
+            j++;
+        }
+        
+    }
+    for(int i=0; i<n; i++){
+        std::cout<<arr[i]<<' ';
+    }
+    return 0;
+}
+
+//Move all Zeros to the end of the array
+
+#include <iostream>
+
+int main(){
+    int arr[] = {1,2,3,4,5};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    int num; 
+    std::cin>>num;
+    int index = -1;
+
+    for(int i=0; i<n; i++){
+        if(arr[i] == num){
+            index = i;
+            break;
+        }
+    }
+
+    if(index == -1){
+        std::cout<<"-1";
+    }else{
+        std::cout<<"index is "<<index;
+    }
+
+    return 0;
+}
+
+//Linear Search
+
+#include <iostream>
+#include <set>
+
+int main(){
+    int arr1[] = {1,2,3,4,5};
+    int arr2[] = {2,3,4,5,6};
+    int n = sizeof(arr1) / sizeof(arr1[0]);
+
+    int m = sizeof(arr2) / sizeof(arr2[0]);
+
+    std::set<int> st;
+    for(int i=0;i<n; i++){
+        st.insert(arr1[i]);
+    }
+
+    for(int i=0; i<m; i++){
+        st.insert(arr2[i]);
+    }
+
+    int combine[1000];
+    //set datastructure to array
+    std::copy(st.begin(),st.end(),combine);
+    int k = st.size();
+
+    for(int i=0; i<k; i++){
+        std::cout<<combine[i]<<' ';
+    }
+
+    return 0;
+}
+
+//Union of Two Sorted Arrays using set approach 
+
+#include <iostream>
+
+int main(){
+    int arr[] = {8,2,4,5,3,7,1};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    int sum = ((n+1)*(n+2)) / 2;
+    int nsum = 0;
+
+    for(int i=0; i<n; i++){
+        nsum += arr[i];
+    }
+
+    int missing = sum - nsum;
+
+    std::cout<<missing;
+    return 0;
+}
+
+//Find the Missing Number
