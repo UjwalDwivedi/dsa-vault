@@ -840,3 +840,71 @@ int main(){
 }
 
 //Find the Missing Number
+
+#include <iostream>
+
+int main(){
+    int arr[] = {1,1,0,1,1,1};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    int count = 0;
+    for(int i=0; i<n; i++){
+        if(arr[i] == 1){
+            count++;
+        }
+
+        if(arr[i] == 0){
+            count = 0;
+        }
+    }
+
+    std::cout<<count;
+    return 0;
+}
+
+//Count Maximum Consecutive One's in the array
+
+#include <iostream>
+
+int main(){
+    int arr[] = {4,1,2,1,2};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    int value = -1;
+
+    for(int i=0; i<n; i++){
+        int current_num = arr[i];
+        int count = 0;
+        for(int j=0; j<n; j++){
+            if(arr[j] == current_num){
+                count++;
+            }
+        }
+
+        if(count ==1){
+            value = current_num;
+        }
+    }
+
+    std::cout<<value;
+    return 0;
+}   
+
+//Find the number that appears once, and the other numbers twice ----- Brute force approach t.c = 0(n^n) s.c = 0(1)
+
+#include <iostream>
+
+int main(){
+    int arr[] = {4,1,2,1,2};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    int xorr = 0;
+    for(int i=0; i<n; i++){
+        xorr = xorr^arr[i];
+    }
+
+    std::cout<<xorr;
+    return 0;
+}   
+
+//Find the number that appears once, and the other numbers twice ------ optimal approach t.c = 0(n) s.c = 0(1)
