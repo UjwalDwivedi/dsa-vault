@@ -908,3 +908,131 @@ int main(){
 }   
 
 //Find the number that appears once, and the other numbers twice ------ optimal approach t.c = 0(n) s.c = 0(1)
+
+#include <iostream>
+#include <algorithm>
+
+int main(){
+    int arr[] = {10,5,2,7,1,9};
+    int n = sizeof(arr) / sizeof(arr[0]);
+    int target = 15;
+
+
+    int len = 0;
+    for(int i=0; i<n; i++){
+        for(int j=i; j<n; j++){
+            int count = 0;
+            for(int k=i; k<=j; k++){
+                count+= arr[k];
+            }
+            
+            if(count == target){
+                len = std::max(len, j-i+1);
+            }
+        }
+    }
+
+    std::cout<<len;
+    return 0;
+}   
+
+//Longest Subarray with given Sum K(Positives) -------- Brute force approach t.c = 0(n^3) s.c = 0(1)
+
+#include <iostream>
+#include <algorithm>
+
+int main(){
+    int arr[] = {10,5,2,7,1,9};
+    int n = sizeof(arr) / sizeof(arr[0]);
+    int target = 15;
+
+
+    int len = 0;
+    for(int i=0; i<n; i++){
+        int count =0; 
+
+        for(int j=i; j<n; j++){
+            count += arr[j];
+
+
+            if(count == target){
+                len = std::max(len, j-i+1);
+            }
+        }
+    }
+
+    std::cout<<len;
+    return 0;
+}   
+
+//Longest Subarray with given Sum K(Positives) -------- Brute force approach t.c = 0(n^2) s.c = 0(1)
+
+#include <iostream>
+#include <algorithm>
+#include <unordered_map>
+
+int main(){
+    int arr[] = {10,5,2,7,1,9};
+    int n = sizeof(arr) / sizeof(arr[0]);
+    int k = 15;
+    std::unordered_map<int, int > mp;
+    long long sum = 0;
+    int max_len = 0;
+    for(int i=0; i<n; i++){
+        sum += arr[i];
+
+        if(sum == k){
+            max_len = std::max(max_len, i+1);
+        }
+
+        long long remainder = sum - k;
+        if(mp.find(remainder) != mp.end()){
+            int len = i - mp[remainder];
+            max_len = std::max(max_len, len);
+        }   
+
+        if(mp.find(sum) == mp.end()){
+            mp[sum] = i;
+        }
+    }    
+
+    std::cout<< max_len;
+
+    return 0;
+}   
+
+//Longest Subarray with given Sum K(Positives) ----- Better approach t.c = 0(n) s.c = 0(1)
+
+#include <iostream>
+
+int main(){
+    int arr[] = {2,6,5,8,11};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    int target = 14;
+    bool exist = false;
+    int index1 = -1;
+    int index2 = -1;
+
+    for(int i=0; i<n; i++){
+        
+        for(int j=i; j<n; j++){
+            if((arr[i] + arr[j]) == target){
+                exist = true;
+                index1 = i;
+                index2 = j;
+            }
+        }
+
+        if(exist == true) break;
+    }
+
+    if(exist == true){
+        std::cout<<"YES"<<' '<<"With the indexes"<<' '<<index1<<' '<<index2;
+    }else{
+        std::cout<<"NO";
+    }
+
+}   
+
+//Two Sum : Check if a pair with given sum exists in Array ------ Brute force approach t.c = 0(n^2) s.c = 0(1)
