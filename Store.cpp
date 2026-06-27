@@ -1016,7 +1016,8 @@ int main(){
 
     for(int i=0; i<n; i++){
         
-        for(int j=i; j<n; j++){
+        for(int j=i+1; j<n; j++){
+            
             if((arr[i] + arr[j]) == target){
                 exist = true;
                 index1 = i;
@@ -1036,3 +1037,217 @@ int main(){
 }   
 
 //Two Sum : Check if a pair with given sum exists in Array ------ Brute force approach t.c = 0(n^2) s.c = 0(1)
+
+#include <iostream>
+#include <unordered_map>
+
+int main(){
+    int arr[] = {2,6,5,8,11};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    bool exist = false;
+    int index2 = -1;
+    int index1 = -1;
+    int target =  15;
+    std::unordered_map<int, int> mp;
+
+    for(int i=0; i<n; i++){
+        int state = arr[i];
+        int diff = target - state;
+
+        if(mp.find(diff) != mp.end()){
+            exist = true;
+            index1 = i;
+            index2 = mp[diff];
+
+            break;
+        }
+
+        mp[state] = i;
+    }
+    
+    if(exist){
+        std::cout<<"YES"<<' '<<"With the indexes"<<' '<<index1<<' '<<index2;
+    }else{
+        std::cout<<"NO";
+    }
+    return 0;
+}   
+
+//Two Sum : Check if a pair with given sum exists in Array ------ Better approach t.c 0(n) s.c(n)
+
+#include <iostream>
+
+int main(){
+    int arr[] = {0,1,2,0,1,2,1,2,0,0,0,1};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    int count_0 = 0;
+    int count_1 = 0;
+    int count_2 = 0;
+
+    for(int i=0; i<n; i++){
+        if(arr[i] == 0) count_0++;
+        if(arr[i] == 1) count_1++;
+        if(arr[i] == 2) count_2++;
+    }
+
+    int index = 0;
+
+    for(int i=0; i<count_0; i++){
+        arr[index] = 0;
+        index++;
+    }
+    for(int i=0; i<count_1; i++){
+        arr[index] = 1;
+        index++;
+    }
+    for(int i=0; i<count_2; i++){
+        arr[index] = 2;
+        index++;
+    }
+
+    for(int i=0; i<n; i++){
+        std::cout<<arr[i]<<' ';
+    }
+
+    return 0;
+}
+
+//Sort an array of 0s, 1s and 2s ------- Better approach t.c = 0(2n) s.c = 0(1)
+
+#include <iostream>
+
+void swap(int *x,int *y){
+    int temp = *x;
+    *x = *y;
+    *y = temp;
+}
+
+int main(){
+    int arr[] = {0,1,2,0,1,2,1,2,0,0,0,1};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    int low = 0;
+    int mid =0; 
+    int high = n-1;
+    
+    while(mid<=high){
+        if(arr[mid] == 0){
+            swap(&arr[mid], &arr[low]);
+            mid++;
+            low++;
+        }
+
+        else if(arr[mid] == 1){
+            mid++;
+        }
+
+        else{
+            swap(&arr[mid], &arr[high]);
+            high--;
+        }
+    }
+
+    for(int i=0; i<n; i++){
+        std::cout<<arr[i]<<' ';
+    }
+
+    return 0;
+}
+
+//Sort an array of 0s, 1s and 2s ------- optimal approach t.c = 0(n) s.c = 0(1)
+
+#include <iostream>
+
+int main(){
+    int arr[] = {7,0,0,1,7,7,2,7,7};
+    int n = sizeof(arr) / sizeof(arr[0]);
+    int answer = -1;
+
+    for(int i=0; i<n; i++){
+        int count = 0;
+
+        for(int j=0; j<n; j++){
+            if(arr[j] == arr[i]){
+                count++;
+            }
+
+            if(count > n/2){
+                answer = arr[i];
+            }
+        }
+    }
+
+    if(answer != -1){
+        std::cout<<answer;
+    }
+
+    return 0;
+}
+
+//Find the Majority Element that occurs more than N/2 times ---- Brute force approach t.c 0(n^2) s.c 0(1)
+
+
+#include <iostream>
+#include <unordered_map>
+
+int main(){
+    int arr[] = {7,0,0,1,7,7,2,7,7};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    std::unordered_map <int, int> mp;
+
+    for(int i=0; i<n; i++){
+        mp[arr[i]]++;
+        if(mp[arr[i]] > n/2){
+            std::cout<<arr[i];
+            break;
+        }
+    }
+    
+    return 0;
+}
+
+//Find the Majority Element that occurs more than N/2 times ---- Better approach t.c 0(n) s.c 0(n)
+
+#include <iostream>
+#include <unordered_map>
+
+int main(){
+    int arr[] = {7,0,0,1,7,7,2,7,7};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    int el;
+    int count = 0;
+
+    for(int i=0; i<n; i++){
+        if(count == 0){
+            count = 1;
+            el = arr[i];
+        }
+        else if(arr[i] == el){
+            count++;
+        }
+        else{
+            count--;
+        }
+        
+    }
+
+    int count_1 = 0;
+    for(int i=0; i<n; i++){
+        if(arr[i] == el){
+            count_1++;
+        }
+    }
+
+    if(count_1 > n/2){
+        std::cout<<el;
+    }
+
+    
+    return 0;
+}
+
+//Find the Majority Element that occurs more than N/2 times ---- optimal approach t.c 0(n) s.c 0(1)
