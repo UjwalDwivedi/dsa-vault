@@ -1251,3 +1251,116 @@ int main(){
 }
 
 //Find the Majority Element that occurs more than N/2 times ---- optimal approach t.c 0(n) s.c 0(1)
+
+#include <iostream>
+
+int main(){
+    int arr[] = {-2,-3,4,-1,-2,1,5,-3};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    int count_max = 0;
+
+    for(int i=0; i<n; i++){
+        int count = 0;
+        for(int j=i; j<n; j++){
+            count += arr[j];
+
+            if(count > count_max){
+                count_max = count;
+            }
+        }
+    }
+    std::cout<<count_max;
+    return 0;
+}
+
+//Kadane's Algorithm : Maximum Subarray Sum in an Array ------- Brute force approach t.c = 0(n^2) s.c = 0(1)
+
+#include <iostream>
+
+int main(){
+    int arr[] = {-2,-3,4,-1,-2,1,5,-3};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    int max_sum = 0;
+    int sum = 0;
+    int ans_start = -1;
+    int ans_end = -1;
+
+    for(int i=0; i<n; i++){
+
+        if(sum == 0){
+            ans_start = i;
+        }
+
+        sum += arr[i];
+
+        if(sum > max_sum){
+            max_sum = sum;
+            ans_end = i;
+        }
+
+        if(sum < 0){
+            sum = 0;
+        }
+    }
+
+    std::cout<<max_sum<<' '<<"and the max sub array is "<< '\n';
+
+    for(int i=ans_start; i<=ans_end; i++){
+        std::cout<<arr[i]<<' ';
+    }
+
+    return 0;
+}
+
+//"Kadane's Algorithm" : Maximum Subarray Sum in an Array ------- optimal approach using kadane's algo t.c = 0(n) s.c = 0(1)
+
+#include <iostream>
+#include <algorithm>
+
+int main(){
+    int arr[] = {7,6,4,3,1};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    int max_profit = 0;
+
+    for(int i=0; i<n; i++){
+        for(int j= i+1; j<n; j++){
+            int curr_pro = arr[j] - arr[i];
+
+            max_profit = std::max(max_profit, curr_pro);
+        }
+    }
+
+    std::cout<<max_profit;
+    return 0;
+}
+
+//Stock Buy And Sell ------- brute force approach t.c = 0(n^2) s.c = 0(1)
+
+#include <iostream>
+#include <algorithm>
+#include <climits>
+
+int main(){
+    int arr[] = {7,1,5,3,6,4};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    int min = INT_MAX;
+
+    int max_profit = 0;
+    for(int i=0; i<n; i++){
+        if(arr[i] < min){
+            min = arr[i];
+        }
+        else{
+            max_profit = std::max(max_profit, (arr[i] - min));
+        }
+    }
+
+    std::cout<<max_profit;
+    return 0;
+}
+
+//Stock Buy And Sell ------- optimal approach t.c = 0(n) s.c = 0(1)
