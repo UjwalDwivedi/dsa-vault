@@ -1364,3 +1364,62 @@ int main(){
 }
 
 //Stock Buy And Sell ------- optimal approach t.c = 0(n) s.c = 0(1)
+
+#include <bits/stdc++.h>
+using namespace std;
+
+class solution{
+public:
+    vector<int> rearrange_array(vector<int>& arr){
+        vector<int> pos;
+        vector<int> neg;
+
+        for(int i=0; i<arr.size(); i++){
+            if(arr[i] > 0){
+                pos.push_back(arr[i]);
+            }
+            else{
+                neg.push_back(arr[i]);
+            }
+        }
+
+        for(int i=0; i< arr.size()/2; i++){
+            arr[2*i] = pos[i];
+            arr[2*i + 1] = neg[i];
+        }
+
+        return arr;
+    }
+
+};
+
+//Rearrange Array Elements by Sign t.c = O(N+N/2) s.c = O(n)
+
+#include <bits/stdc++.h>
+using namespace std;
+
+class solution{
+public:
+    vector<int> rearrange_array(vector<int> &arr){
+        int pos_index = 0;
+        int neg_index = 1;
+        vector<int> ans(arr.size(), 0);
+
+        for(int i=0; i< arr.size(); i++){
+            if(arr[i] > 0){
+                ans[pos_index] = arr[i];
+                pos_index += 2;
+            }
+            else{
+                ans[neg_index] = arr[i];
+                neg_index += 2;
+            }
+        }
+
+        return ans;
+
+    }
+
+};
+
+//Rearrange Array Elements by Sign t.c = O(N) s.c = O(N)
