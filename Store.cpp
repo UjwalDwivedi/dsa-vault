@@ -1423,3 +1423,82 @@ public:
 };
 
 //Rearrange Array Elements by Sign t.c = O(N) s.c = O(N)
+
+#include <iostream>
+
+int main(){
+    int arr[] = {3,5,8,15,19};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    int target = 9;
+    int ans;
+    int low = 0;
+    int high = n-1;
+
+    while(low <= high){
+        int mid = (low + high) / 2;
+        if(arr[mid]>=target){
+            ans = mid;
+            high = mid - 1;
+        }
+        else{
+            low = mid + 1;
+        }
+    }
+
+    std::cout<<ans;
+}
+
+//lower bound problem t.c = O(logn) s.c = O(1)
+
+#include <iostream>
+
+int main(){
+    int arr[] = {1,2,2,3};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    int target = 2;
+    int ans;
+    int low = 0;
+    int high = n-1;
+
+    while(low <= high){
+        int mid = (low + high) / 2;
+        if(arr[mid]>target){
+            ans = mid;
+            high = mid - 1;
+        }
+        else{
+            low = mid + 1;
+        }
+    }
+
+    std::cout<<ans;
+}
+
+
+//upper bound problem t.c = O(logn) s.c = O(1)
+
+class Solution {
+public:
+    int searchInsert(vector<int>& nums, int target) {
+        int n = nums.size();
+        int low = 0;
+        int high = n-1;
+
+        while(low <= high){
+            int mid = (low + high) / 2;
+            if(nums[mid] == target){
+                return mid;
+            }
+            else if(nums[mid] < target){
+                low = mid + 1;
+            }
+            else{
+                high = mid - 1;
+            }
+        }
+
+        return low;
+    }
+};
