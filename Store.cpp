@@ -1502,3 +1502,123 @@ public:
         return low;
     }
 };
+
+#include <bits/stdc++.h>
+using namespace std;
+
+class Floorceil{
+public:
+
+    int floor(int arr[], int n, int tar){
+        int low = 0, high = n-1;
+        int ans = -1;
+
+        while(low<=high){
+            int mid = (low + high) / 2;
+
+            if(arr[mid] <= tar){
+                ans = arr[mid];
+                low = mid + 1;
+            }
+            else{
+                high = mid -1;
+            }
+        }
+
+        return ans;
+    }
+
+    int ceil(int arr[], int n, int tar){
+        int low = 0, high = n-1;
+        int ans = -1;
+
+        while(low<= high){
+            int mid = (low + high) / 2;
+            
+            if(arr[mid] >= tar){
+                ans = arr[mid];
+                high = mid -1;
+            }
+            else{
+                low = mid + 1;
+            }
+        }
+
+        return ans;
+    }
+
+    pair<int, int> getFloorAndCeil(int arr[], int n, int x) {
+        int f = floor(arr, n, x);
+        int c = ceil(arr, n, x);
+        return make_pair(f, c);
+    }
+
+};
+
+int main(){
+    int arr[] = {10,20,30,40,50};
+    int n = sizeof(arr) / sizeof(arr[0]);
+    int x = 25;
+
+    Floorceil finder;
+    pair<int, int> ans = finder.getFloorAndCeil(arr, n, x);
+    cout << "The floor and ceil are: " << ans.first << " " << ans.second << endl;
+    return 0;
+}
+
+//  Floor and Ceil in Sorted Array t.c = O(logn) s.c = O(1)
+
+#include <bits/stdc++.h>
+using namespace std;
+
+class Solution {
+private:
+    int lowerbound(vector<int>& nums, int n, int target) {
+        int low = 0, high = n - 1;
+        int ans = n;
+
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+
+            if (nums[mid] >= target) {
+                ans = mid;
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
+        return ans;
+    }
+
+    int upperbound(vector<int>& nums, int n, int target) {
+        int low = 0, high = n - 1;
+        int ans = n;
+
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+
+            if (nums[mid] > target) {
+                ans = mid;
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
+        return ans;
+    }
+
+public:
+    vector<int> searchRange(vector<int>& nums, int target) {
+        int n = nums.size();
+        int lb = lowerbound(nums, n, target);
+        
+        if (lb == n || nums[lb] != target) {
+            return {-1, -1};
+        }
+
+        int ub = upperbound(nums, n, target);
+        return {lb, ub - 1};
+    }
+};
+
+//find-first-and-last-position-of-element-in-sorted-array t.c = O(logn) s.c = O(1)
