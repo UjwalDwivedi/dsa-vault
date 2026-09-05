@@ -1999,18 +1999,18 @@ class node{
     }
 };
 
-class stack{
+class mystack{
     public:
     node* top;
     int currentsize;
 
     public:
 
-    stack(){
+    mystack(){
         top = nullptr;
         currentsize = 0;
     }
-    ~stack(){
+    ~mystack(){
         while(!isempty()){
             pop();
         }
@@ -2052,7 +2052,7 @@ class stack{
 };
 
 int main(){
-    stack st;
+    mystack st;
 
     st.push(10);
     st.push(20);
@@ -2073,3 +2073,210 @@ int main(){
 }
 
 //stack using ll
+
+#include <iostream>
+#include <queue>
+#include <string>
+
+int main(){
+    std::string text = "ujjiisok";
+    std::queue <char> charqueue;
+
+    for(char c : text){
+        charqueue.push(c);
+    }
+
+    while(!charqueue.empty()){
+        std::cout<<charqueue.front();
+        charqueue.pop();
+    }
+
+    std::cout<<'\n';
+    return 0;
+}
+
+//some basics
+
+#include <iostream>
+#include <string>
+#include <queue>
+#include <stack>
+
+
+bool isPalQueueStack(const std::string& str) {
+    std::queue<char> aQueue;
+    std::stack<char> aStack;
+
+    for (char ch : str) {
+        aQueue.push(ch); 
+        aStack.push(ch);
+    }
+
+    bool charactersAreEqual = true;
+
+    while (!aQueue.empty() && charactersAreEqual) {
+        char queueFront = aQueue.front();
+        char stackTop = aStack.top();
+
+        if (queueFront == stackTop) {
+            aQueue.pop(); 
+            aStack.pop(); 
+        } else {
+            charactersAreEqual = false;
+        }
+    }
+
+    return charactersAreEqual;
+}
+
+
+bool isPalRecursive(const char str[], int left, int right) {
+ 
+    if (left >= right) {
+        return true;
+    }
+
+ 
+    if (str[left] == str[right]) {
+        return isPalRecursive(str, left + 1, right - 1);
+    }
+
+    return false;
+}
+
+int main() {
+    std::string testWord1 = "rotator";
+    std::string testWord2 = "algorithm";
+
+  
+    std::cout << "--- Non-recursive (Queue & Stack) ---\n";
+    std::cout << testWord1 << " : " << (isPalQueueStack(testWord1) ? "Palindrome" : "Not Palindrome") << "\n";
+    std::cout << testWord2 << " : " << (isPalQueueStack(testWord2) ? "Palindrome" : "Not Palindrome") << "\n\n";
+
+    
+    std::cout << "--- Recursive ---\n";
+    std::cout << testWord1 << " : " 
+              << (isPalRecursive(testWord1.c_str(), 0, testWord1.length() - 1) ? "Palindrome" : "Not Palindrome") << "\n";
+    std::cout << testWord2 << " : " 
+              << (isPalRecursive(testWord2.c_str(), 0, testWord2.length() - 1) ? "Palindrome" : "Not Palindrome") << "\n";
+
+    return 0;
+}
+
+//palindromic string using stack and queue
+
+#include <bits/stdc++.h>
+using namespace std;
+
+class node{
+
+    public:
+    int val;
+    node* next;
+
+    node(int data){
+        val = data;
+        next = nullptr;
+    }
+};
+
+class myqueue{
+    public:
+
+    node* start;
+    node* end;
+    int size;
+
+    public:
+
+    myqueue(){
+        start = nullptr;
+        end = nullptr;
+        size = 0;
+    }
+
+    ~myqueue(){
+        while(!isempty()){
+            dequeue();
+        }
+    }
+
+    bool isempty() const{
+        return start == nullptr;
+    }
+
+    void enqueue(int x){
+        node* temp = new node(x);
+        if(isempty()){
+            start = end = temp;
+        }
+
+        end->next = temp;
+        end = temp;
+        size++;
+    }
+
+    void dequeue(){
+        if(isempty()){
+            cout<<"nothing to pop queue is empty";
+            return;
+        }
+
+        node* temp = start;
+        start = start -> next;
+        delete temp;
+        size--;
+    }
+
+    int top(){
+        if(isempty()){
+            return -1;
+        }
+        
+        return start->val;
+    }
+
+    int length(){
+        return size;
+    }
+
+    void display() const {
+        if (isempty()) {
+            std::cout << "Queue is empty.\n";
+            return;
+        }
+        node* temp = start;
+        std::cout << "Queue elements (Front to Rear): ";
+        while (temp != nullptr) {
+            std::cout << temp->val << " -> ";
+            temp = temp->next;
+        }
+        std::cout << "NULL\n";
+    }
+
+
+};
+
+int main() {
+    myqueue q;
+
+
+    q.enqueue(10);
+    q.enqueue(20);
+    q.enqueue(30);
+    q.display();
+
+    std::cout << "Front element: " << q.top() << "\n";
+    std::cout << "Queue size: " << q.length() << "\n";
+
+    std::cout << "\nDequeuing one element...\n";
+    q.dequeue();
+    q.display();
+
+    std::cout << "Front element now: " << q.top() << "\n";
+    std::cout << "Queue size now: " << q.length() << "\n";
+
+    return 0;
+}
+
+//queue using ll
