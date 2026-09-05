@@ -1731,3 +1731,345 @@ int main(){
 }
 
 //Intro to linked list
+/*
+#include <bits/stdc++.h>
+using namespace std;
+
+
+class Node{
+
+    public:
+
+    int data;
+    Node* next;
+    Node* back;
+
+    public:
+
+    Node(int data1, Node* next1, Node* back1){
+        data = data1;
+        next = next1;
+        back = back1;
+    }
+};
+
+Node* convertarrtodll(vector<int> &arr){
+
+    Node* head = new Node(arr[0], nullptr, nullptr);
+    Node* prev = head;
+
+    for(int i=1; i<arr.size(); i++){
+        Node* temp = new Node(arr[i], nullptr, prev);
+        prev -> next = temp;
+        prev = temp;
+    }
+
+    return head;
+}
+
+void print(Node* head){
+    while(head != NULL){
+        cout<<head->data<<" ";
+        head = head -> next;
+    }
+    cout<<endl;
+}
+
+Node* deleteheadofDll(Node* head){
+
+    if(head == NULL){
+        return head;
+    }
+
+    if(head->next == nullptr && head->back == nullptr){
+        return head;
+    }
+
+    Node* prev = head;
+    head = head -> next;
+    head -> back = nullptr;
+    prev -> next = nullptr;
+    delete prev;
+
+    return head;
+
+}
+
+Node* deletetailofDll(Node* head){
+    if(head == NULL){
+        return NULL;
+    }
+
+    if(head-> next == NULL && head-> back == NULL){
+        return NULL;
+    }
+    Node* temp = head;
+
+    while((temp -> next -> next) != nullptr){
+        temp = temp ->  next;
+    }
+    Node* prev = temp;
+    temp = temp -> next;
+    temp -> back = nullptr;
+    prev -> next = nullptr;
+    delete temp;
+
+    return head;
+}
+
+Node* deletekthelementofDll(Node* head, int k){ 
+
+    if(head == NULL){
+        return NULL;
+    }
+
+    Node* temp = head;
+    int cnt = 0;
+    while(temp != NULL){
+        cnt++;
+
+        if(cnt == k){
+            break;
+        }
+        temp = temp-> next;
+    }
+
+    Node* prev = temp->back;
+    Node* front = temp->next;
+
+    if(prev == nullptr && front == nullptr){
+        delete temp;
+        return NULL;
+    }
+
+    else if(prev == nullptr){
+        Node* ans = deleteheadofDll(head);
+        return ans;
+    }
+
+    else if(front == nullptr){
+        Node* ans = deletetailofDll(head);
+        return ans;
+    }
+
+    temp -> next = nullptr;
+    temp -> back = nullptr;
+    prev -> next = front;
+    front -> back = prev;
+    delete temp;
+    return head;
+}
+
+void deletenode(Node* temp){
+    Node* prev = temp -> back;
+    Node* front = temp -> next;
+
+    if(front == nullptr){
+        prev -> next = nullptr;
+        temp -> back = nullptr;
+        delete temp;
+    }
+
+    prev-> next = front;
+    front -> back = prev;
+    temp-> next = temp-> back = nullptr;
+    delete temp;
+}
+
+Node* inserthead(Node* head, int val){
+    Node* newNode = new Node(val, head, nullptr);
+    newNode-> next = head;
+    head -> back = newNode;
+    return newNode;
+}
+
+Node* inserttail(Node* head, int val){
+    Node* temp = head;
+    while(temp -> next != NULL){
+        temp = temp -> next;
+    }
+
+    Node* prev = temp -> back;
+    prev -> next = nullptr;
+    temp -> back = nullptr;
+    Node* newNode = new Node(val,temp,prev);
+    temp -> back = newNode;
+    prev -> next = newNode;
+
+    return head;
+}
+
+int main(){
+    vector<int> arr = {1,3,2,4};
+    Node* head = convertarrtodll(arr);
+
+    Node* newhead = inserttail(head,10);
+    print(newhead);
+}*/
+
+// Intro to dll
+
+#include <iostream>
+using namespace std;
+
+class MyStack {
+    int topIndex;
+    int n;
+    int* arr;
+
+public:
+    MyStack(int size) {
+        arr = new int[size];
+        n = size;
+        topIndex = -1;
+    }
+
+    ~MyStack() { 
+        delete[] arr; 
+    }
+
+    void push(int x) {
+        if (isFull()) {
+            cout << "overflow\n";
+            return;
+        }
+        arr[++topIndex] = x;
+    }
+
+    int top() {
+        if (!isEmpty()) {
+            return arr[topIndex];
+        }
+        return -1;
+    }
+
+    int pop() {
+        if (isEmpty()) {
+            return -1;
+        }
+        return arr[topIndex--];
+    }
+
+    int size() {
+        return topIndex + 1;
+    }
+
+    bool isEmpty() { return topIndex == -1; }
+
+    bool isFull() { return topIndex == n - 1; }
+};
+
+int main() {
+    MyStack st(3);
+
+    st.push(10);
+    st.push(20);
+    st.push(30);
+
+    cout << "The top element is " << st.top() << endl;
+    cout << "Popping " << st.pop() << endl;
+    cout << "The top element is " << st.top() << endl;
+
+    st.pop();
+    st.pop();
+
+    if (st.isEmpty()) {
+        cout << "The stack is empty" << endl;
+    } else {
+        cout << "The stack is not empty" << endl;
+    }
+
+    return 0;
+}
+
+//stack using arr
+
+
+#include <iostream>
+
+class node{
+    public:
+    int val;
+    node* next;
+
+    
+    node(int data){
+        val = data;
+        next = nullptr;
+    }
+};
+
+class stack{
+    public:
+    node* top;
+    int currentsize;
+
+    public:
+
+    stack(){
+        top = nullptr;
+        currentsize = 0;
+    }
+    ~stack(){
+        while(!isempty()){
+            pop();
+        }
+    }
+
+    void push(int x){
+        node* temp = new node(x);
+        temp -> next = top;
+        top = temp;
+        currentsize++;
+    }
+
+    void pop(){
+        if(isempty()){
+            std::cout<<"empty stack can't pop";
+            return;
+        }
+
+        node* temp = top;
+        top = top->next;
+        delete temp;
+        currentsize--;
+    }
+
+    int peek(){
+        if(isempty()){
+            return -1;
+        }
+        return top->val;
+    }
+
+    int size(){
+        return currentsize;
+    }
+
+    bool isempty(){
+        return top == nullptr;
+    }
+};
+
+int main(){
+    stack st;
+
+    st.push(10);
+    st.push(20);
+    st.push(30);
+
+    std::cout << "Top element is: " << st.peek() << "\n";
+    std::cout << "Stack size is: " << st.size() << "\n";
+
+    st.pop();
+    st.pop();
+
+    std::cout << "Is stack empty? " << (st.isempty() ? "Yes" : "No") << "\n";
+
+    st.pop();
+    std::cout << "Is stack empty now? " << (st.isempty() ? "Yes" : "No") << "\n";
+
+    return 0;
+}
+
+//stack using ll
